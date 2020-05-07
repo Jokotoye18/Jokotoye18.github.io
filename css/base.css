@@ -1,0 +1,131 @@
+body{
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: darkcyan;
+    
+}
+*{
+    box-sizing: border-box;
+}
+.head{
+    margin-top: 2em;
+    background-color: black;
+    padding: 2em 1.5em;
+    border-radius: 1em;
+    color: #ffffff;
+    width: 95%;
+    margin: 3em auto;
+    max-width: 600px;
+}
+.head h2{
+    font-size: 2rem;
+    text-align: center;
+}
+.quiz-container{
+    width: 95%;
+    margin: 3em auto;
+    max-width: 600px;
+    background-color: #ffffff;
+    padding: 2em 1.5em;
+    border-radius: 1em;
+    
+
+}
+.question-number h3{
+    color: cadetblue;
+    font-size: 1.5em;
+    border-bottom: 1px solid#cccccc;
+    padding-bottom: 0.5em;
+}
+.question{
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+.options div{
+    background-color: #cccccc;
+    font-size: 1em ;
+    margin: 1em 0 ;
+    padding: 1em;
+    border-radius: 0.5em;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+.options div.correct{
+    background-color: green;
+    color: white;
+}
+.options div.wrong{
+    background-color: red;
+    color: white;
+}
+.options div.disabled{
+    pointer-events: none;
+}
+.button{
+    margin: 2em 0;
+}
+.button .btn{
+    padding: 1em 3em;
+    background-color: cadetblue;
+    border-radius: 0.5em;
+    font-size: 1rem;
+    border: none;
+}
+.answer-tracker{
+    border-top: 1px solid #cccccc;
+    padding-top: 0.7em;
+}
+.answer-tracker div{
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: #cccccc;
+
+}
+.answer-tracker .correct{
+    background-color: green;
+}
+.answer-tracker .wrong{
+    background-color: red;
+}
+
+.quiz-over{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 10;
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+}
+.quiz-over.show{
+    display: flex;
+}
+
+.quiz-over .box{
+    background-color: cadetblue;
+    padding: 2em;
+    border-radius: 1em;
+    color: ffffff;
+    text-align: center;
+}
+.quiz-over .box button{
+    border: none;
+    padding: 15px 50px;
+    background-color: maroon;
+    border-radius: 0.3em;
+    font-size: 1rem;
+    margin: 1em 0;
+    display: block;
+    width: 50%;
+    margin: 0 auto;
+    color: #ffffff;
+
+}

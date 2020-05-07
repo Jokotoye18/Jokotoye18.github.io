@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qiuz Game</title>
+    <link rel="stylesheet" href="css/base.css" type="text/css">
+    <script src="js/base.js" type="text/javascript"></script>
+</head>
+<body>
+    <main>
+        <div class="head">
+            <h2>Welcome to my short quiz.</h2>
+        </div>
+        <section class="quiz-container">
+            <div class="question-number">
+                <h3>Question <span class="question-num-value"></span> of <span class="total-questions"></span></h3>
+            </div>
+            <div class="question"></div>
+            <div class="options">
+                <div id="0" class="option1" onclick="checkClick(this)"></div>
+                <div id="1" class="option2" onclick="checkClick(this)"></div>
+                <div id="2" class="option3" onclick="checkClick(this)"></div>
+            </div>
+            <div class="button">
+                <button class="btn" onclick="next()" type="button">Next</button>
+            </div>
+            <div class="answer-tracker">
+                
+            </div>
+            <div class="quiz-over">
+                <div class="box">
+                    <h1>
+                        Good Try!<br>
+                        You got <span class="correct-answers"></span> out of <span class="total-questions2"></span> answers correctly! <br>
+                        That's <span class="percentage"></span> 
+                    </h1>
+                    <button type="button" onclick="tryAgain()">Try Again</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <script>
+        const questionNumberSpan = document.querySelector(".question-num-value");
+        const totalQuestionSpan = document.querySelector(".total-questions");
+        const answerTrackerContainer = document.querySelector(".answer-tracker");
+        const question = document.querySelector('.question')
+        const correctAnswerSpan = document.querySelector('.correct-answers')
+        const totalQuestionSpan2 = document.querySelector('.total-questions2')
+        const percentage = document.querySelector('.percentage')
+        const options= document.querySelector(".options").children;
+        const opt1=document.querySelector(".option1");
+        const opt2=document.querySelector(".option2");
+        const opt3=document.querySelector(".option3");
+
+        let questionIndex;
+        let index=0;
+        let myArray=[]
+        let myArr = []
+        let score = 0;
+
+        const questions = [
+            {
+                q: 'Which of the following language is most popular for client side of the web?',
+                options: ['Javascript', 'Python', 'java'],
+                answer: 0
+            },
+            {
+                q: 'The output of  "print(2 > 3)"  in python is?',
+                options: ['True', 'False', 'false'],
+                answer: 1
+            },
+            {
+                q: 'The output of  "console.log(3 < 2)"  in javascript is?',
+                options: ['True', 'False', 'false'],
+                answer: 2
+            },
+            {
+                q: 'Arrays are represented by ________ in javascript',
+                options: ['{ }', '[ ]', '( )'],
+                answer: 1
+            },
+            {
+                q: 'Lists are represented by __________ in python',
+                options: ['{ }', '[ ]', '( )'],
+                answer: 1
+            }
+        ]
+
+        totalQuestionSpan.innerHTML=questions.length;
+        let load = () => {
+            questionNumberSpan.innerHTML=index+1;   
+            question.innerHTML=questions[questionIndex].q;
+            opt1.innerHTML=questions[questionIndex].options[0];
+            opt2.innerHTML=questions[questionIndex].options[1];
+            opt3.innerHTML=questions[questionIndex].options[2];
+            index++;
+        }
+        
+        let checkClick = (self) => { 
+            if (self.id == questions[questionIndex].answer){
+                self.classList.add("correct");
+                updateAnswerTracker("correct");
+                score++;
+            }
+            else{
+                self.classList.add("wrong");
+                updateAnswerTracker("wrong");
+            }
+            disableOptions()
+        }
+
+        let disableOptions = () => {
+            for(let i=0; i<options.length; i++){
+                options[i].classList.add('disabled');
+                if(options[i].id == questions[questionIndex].answer){
+                    options[i].classList.add("correct");
+                }  
+            }
+        } 
+
+        let enableOptions = () => {
+            for(let i=0; i<options.length; i++){
+                options[i].classList.remove('disabled', "correct", "wrong" );
+            }
+        }
+
+        let validate = () => {
+            if(!options[0].classList.contains("disabled")){
+                alert("Please select one option")
+            }
+            else{
+                enableOptions();
+                randomQuestion();
+            }
+        }
+
+        let next = () => {
+            validate()
+        }
+
+        let randomQuestion = () => {
+            let randomNumber = Math.floor(Math.random()*questions.length);
+            let hitDuplicate=0;
+            if(index==questions.length){
+                quizOver()
+            }
+            else{
+                if(myArray.length>0){
+                for(let i=0; i<myArray.length; i++){
+                    if(myArray[i]==randomNumber){
+                        hitDuplicate=1
+                        break;
+                    }
+                }
+                if(hitDuplicate==1){
+                    randomQuestion();
+                }
+                else{
+                    questionIndex=randomNumber;
+                    load();
+                    myArr.push(questionIndex);
+                 }
+            }
+            if (myArray.length==0){
+                questionIndex=randomNumber;
+                load();
+                myArr.push(questionIndex);
+                }
+                console.log(myArr);
+                myArray.push(randomNumber); 
+            }
+            
+        }
+
+        let answerTracker = () => {
+            for(let i=0; i<questions.length; i++){
+                const div = document.createElement("div")
+                    answerTrackerContainer.appendChild(div);
+            } 
+        }
+
+        let updateAnswerTracker = (classNam) =>{
+            answerTrackerContainer.children[index-1].classList.add(classNam)
+        }
+        let quizOver = () => {
+            document.querySelector('.quiz-over').classList.add('show');
+            correctAnswerSpan.innerHTML=score;
+            totalQuestionSpan2.innerHTML=questions.length;
+            percentage.innerHTML=(score/questions.length) * 100 + '%';
+        }
+
+        let tryAgain = () => {
+            window.location.reload();
+        }
+
+        window.onload = () => {
+            randomQuestion();
+            answerTracker();
+        }
+    </script>
+</body>
+</html>
